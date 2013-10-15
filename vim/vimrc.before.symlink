@@ -1,0 +1,4 @@
+let g:airline_powerline_fonts=1
+set guifont=Source\ Code\ Pro\ for\ Powerline:h11
+let g:spf13_consolidated_directory=$HOME . "/.vim/"
+

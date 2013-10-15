@@ -1,0 +1,26 @@
+set term=xterm-256color
+
+" Arduino 
+au BufRead,BufNewFile *.ino,*.pde set filetype=arduino
+
+syntax on
+
+"http://www.jwz.org/doc/tabs-vs-spaces.html
+set shiftwidth=2 "To set the mod-N indentation used when you hit the tab key in vim"
+set tabstop=2 "To cause the TAB file-character to be displayed as mod-N in vi and vim
+set softtabstop=2 "To get vim to interpret tab as an ``indent'' command instead of an insert-a-tab command"
+set expandtab "make <tab> act as shiftwidth."
+
+
+set background=dark
+let g:solarized_termcolors=256
+let g:solarized_termtrans=0
+let g:solarized_contrast="normal"
+let g:solarized_visibility="normal"
+
+" Load a colorscheme here are a few I like :)
+color solarized
+"color tir_black
+"color molokai
+"color peaksea
+

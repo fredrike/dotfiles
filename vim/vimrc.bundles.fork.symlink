@@ -1,0 +1,13 @@
+" Colorshemes
+Bundle 'tir_black'
+Bundle 'inkpot'
+Bundle 'Solarized'
+Bundle 'xterm-color-table.vim'
+
+" Latex
+Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
+Bundle 'LaTeX-Box'
+
+" Arduino
+Bundle "sudar/vim-arduino-syntax"
+

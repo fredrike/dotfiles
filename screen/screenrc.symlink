@@ -1,0 +1,42 @@
+#shell=/usr/bin/bash
+
+# Make the output buffer large for (fast) xterms.
+ termcapinfo xterm* OL=10000
+#  termcapinfo xterm* OL=100
+
+# special xterm hardstatus: use the window title.
+termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+
+
+defscrollback         5000   
+
+# ===============================================================
+# VARIABLES - Paths and Files (esp. programs)
+# ===============================================================
+# bufferfile:   The file to use for commands
+#               "readbuf" ('<') and  "writebuf" ('>'):
+bufferfile            $HOME/.screen_exchange
+#
+# hardcopydir:  The directory which contains all hardcopies.
+hardcopydir           $HOME/.hardcopy
+
+# shell:  Default process started in screen's windows.
+# Makes it possible to use a different shell inside screen
+# than is set as the default login shell.  Halleluja! :-)
+#  shell                 zsh
+ shell                 bash
+# shell                 ksh
+#
+# use caption to show window list:
+caption always "%{= kc}$USER@%H |%<%=%?%-Lw%?%{= kY}%n*%f %t%?(%u)%?%{= kc}%?%+Lw%?%>%=| %l %{kw}[%c.%s ]"
+multiuser off
+autodetach on
+activity "%c activity -> %n%f %t"
+bell "%c bell -> %n%f %t^G"
+vbell_msg " *beep* "
+
+startup_message off
+
+vbell off
+bind R eval "source $HOME/.screenrc" "echo '~/.screenrc reloaded!'"
+escape ^Aa #use C-a as escape key

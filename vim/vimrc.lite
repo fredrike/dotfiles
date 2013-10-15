@@ -1,0 +1,124 @@
+set nocompatible
+
+"-------------------------
+"Fredda's vimrc
+"------------------------
+
+" Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+if &term == 'XTERM' || &term == 'screen' || &term == 'screen-bce'
+  set t_Co=256
+endif
+
+set autoindent "mostly write code.
+
+set autowrite
+set nobackup
+set backspace=2
+set history=50
+set background=dark
+colors default 
+
+set noerrorbells
+
+set esckeys
+set hlsearch
+set noexpandtab
+
+"http://www.jwz.org/doc/tabs-vs-spaces.html
+set shiftwidth=2 "To set the mod-N indentation used when you hit the tab key in vim"
+set tabstop=2 "To cause the TAB file-character to be displayed as mod-N in vi and vim
+set softtabstop=2 "To get vim to interpret tab as an ``indent'' command instead of an insert-a-tab command"
+set expandtab "make <tab> act as shiftwidth."
+
+set magic
+set showmode
+set showmatch
+
+set viminfo=%,'50,\"100,:100,n~/.viminfo
+
+set ttyscroll=0
+set shell=bash
+
+set ttyfast
+set title
+
+set wildchar=<TAB>
+
+
+let vimrc='~/.vimrc'
+let bashrc='~/.bashrc'
+nn ,u :source <C-R>=vimrc<CR><CR>
+nn ,v :edit   <C-R>=vimrc<CR><CR>
+
+nn ,b :edit <C-R>=bashrc<CR><CR>
+
+set linespace=0                 " No extra spaces between rows
+set nu                          " Line numbers on
+set showmatch                   " show matching brackets/parenthesis
+set incsearch                   " find as you type search
+set hlsearch                    " highlight search terms
+set winminheight=0              " windows can be 0 line high
+set ignorecase                  " case insensitive search
+set smartcase                   " case sensitive when uc present
+set wildmenu                    " show list instead of just completing
+set wildmode=list:longest,full  " command <Tab> completion, list matches, then longest common part, then all.
+set whichwrap=b,s,h,l,<,>,[,]   " backspace and cursor keys wrap to
+set scrolljump=5                " lines to scroll when cursor leaves screen
+set scrolloff=3                 " minimum lines to keep above and below cursor
+set foldenable                  " auto fold code
+set list
+set listchars=tab:,.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
+
+" visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
+
+autocmd!
+
+autocmd BufNewFile,BufRead * set formatoptions=tcql nocindent comments&
+autocmd BufNewFile,BufRead *.c,*.cc,*.h set formatoptions=croql cindent comments=sr:/*,mb:*,el:*/,://
+autocmd BufNewFile,BufRead *.php set formatoptions=croql cindent comments=sr:/*,mb:*,el:*/,://
+
+autocmd BufNewFile,BufRead .letter,mutt*,nn.*,snd.*,.txt set tw=72
+
+autocmd BufNewFile,BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+"set term=builtin_ansi
+syntax on
+autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+autocmd BufRead *.py inoremap # X#
+autocmd BufRead *.py set tabstop=2
+autocmd BufRead *.py set shiftwidth=2
+autocmd BufRead *.py set smarttab
+autocmd BufRead *.py set expandtab
+autocmd BufRead *.py set softtabstop=2
+autocmd BufRead *.py set autoindent
+autocmd BufRead *.py highlight BadWhitespace ctermbg=red guibg=red
+autocmd BufRead *.py match BadWhitespace /^\t\+/
+autocmd BufRead *.py match BadWhitespace /\s\+$/
+syntax on
+
+
+"make vim save and load the folding of the document each time it loads"
+"also places the cursor in the last place that it was left."
+au BufWinLeave * mkview
+au BufWinEnter * silent loadview
+
+if has("autocmd")
+	" When editing a file, always jump to the last cursor position
+	autocmd BufReadPost *
+	\ if line("'\"") > 0 && line ("'\"") <= line("$") |
+	\   exe "normal g'\"" |
+	\ endif
+endif
+
+au! BufNewFile,BufRead crontab.* set nobackup | set nowritebackup
+au FileType crontab set nobackup nowritebackup
+
+set viewdir="~/.vim/vimviews"
+set backupdir="~/.vim/vimbackup"
+set directory="~/.vim/vimswap"
+if has('persistent_undo')
+  set undofile
+  set undodir="~/.vim/vimundo"
+endif
+"We are using https://github.com/mbbill/undotree instead

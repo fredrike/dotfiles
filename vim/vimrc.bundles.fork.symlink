@@ -5,9 +5,11 @@ Bundle 'Solarized'
 Bundle 'xterm-color-table.vim'
 
 " Latex
-Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
-Bundle 'LaTeX-Box'
+Bundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
 
 " Arduino
-Bundle "sudar/vim-arduino-syntax"
+Bundle 'sudar/vim-arduino-syntax'
 
+" Other
+Bundle 'phpcs.vim'
+Bundle 'tpope/vim-repeat'

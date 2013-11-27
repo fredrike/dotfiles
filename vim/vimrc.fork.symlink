@@ -1,9 +1,22 @@
-set term=xterm-256color
+if !has('gui_running')
+  set term=xterm-256color
+endif
 
-" Arduino 
+" Arduino
 au BufRead,BufNewFile *.ino,*.pde set filetype=arduino
 
+" Latex & Textfiles like text wrap.
+au BufRead,BufNewFile *.tex,*.txt setlocal wrap linebreak nolist
+autocmd FileType tex call Tex_MakeMap('<leader>ll', ':update!<CR>:call Tex_RunLaTeX()!<CR>', 'n', '<buffer>')
+autocmd FileType tex call Tex_MakeMap('<leader>lf', ':call MakeTexFolds(1)!<CR>', 'n', '<buffer>')
+autocmd FileType tex call Tex_MakeMap('<leader>ll', '<ESC> :update!<CR>:call Tex_RunLaTeX()!<CR>', 'v', '<buffer>')
+autocmd FileType tex let g:Tex_FoldedSections='%%comment,appendix,part,chapter,section,%%fakesection,subsection,subsubsection,paragraph'
+autocmd FileType tex let let Tex_ViewRuleComplete_pdf = '/usr/bin/open -a Preview $*.pdf'
+autocmd FileType tex noremap ,lö ':call MakeTexFolds(1)<CR>'
+
 syntax on
+
+let $PATH .= ':/usr/texbin/'
 
 "http://www.jwz.org/doc/tabs-vs-spaces.html
 set shiftwidth=2 "To set the mod-N indentation used when you hit the tab key in vim"
@@ -11,6 +24,14 @@ set tabstop=2 "To cause the TAB file-character to be displayed as mod-N in vi an
 set softtabstop=2 "To get vim to interpret tab as an ``indent'' command instead of an insert-a-tab command"
 set expandtab "make <tab> act as shiftwidth."
 
+"Map up/down
+noremap <up> gk
+noremap <down> gj
+noremap <S-Up> k
+noremap <S-Down> j
+
+
+set number
 
 set background=dark
 let g:solarized_termcolors=256

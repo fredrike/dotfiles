@@ -1,0 +1,57 @@
+# Sample gitconfig
+#
+
+[hub]
+        protocol = https
+[user]
+        name = Fredrik Erlandsson
+        email = fredrik.e@gmail.com
+[credential]
+        helper = osxkeychain
+[alias]
+        co = checkout
+        promote = !$ZSH/bin/git-promote
+        wtf     = !$ZSH/bin/git-wtf
+        rank-contributers = !$ZSH/bin/git-rank-contributers
+        count   = !git shortlog -sn
+        wdiff = diff --color-words
+[color]
+        diff = auto
+        status = auto
+        branch = auto
+        ui = true
+[core]
+        excludesfile = ~/.gitignore
+        editor = vim
+[apply]
+        whitespace = nowarn
+[mergetool]
+        keepBackup = false
+[difftool]
+        prompt = false
+[help]
+        autocorrect = 1
+[push]
+        # See `git help config` (search for push.default)
+        # for more information on different options of the below setting.
+        #
+        # Setting to git 2.0 default to surpress warning message
+        default = simple
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+
+
+[difftool.latex]
+    cmd = git-latexdiff.sh "$LOCAL" "\"$REMOTE\""
+[difftool]
+    prompt = false
+[alias]
+    latexdiff = difftool -t latex
+    cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+# vim: ft=gitconfig sw=4
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true

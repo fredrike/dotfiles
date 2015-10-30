@@ -99,7 +99,8 @@ set -g status-right '| #[fg=colour232]%H:%M#[default]'
 # Tabs
 setw -g window-status-format ' #I#F #[fg=colour236]#W#[default]'
 setw -g window-status-current-format ' #[fg=colour14]#I#[fg=colour35]#F #[fg=white]#W#[default]'
-setw -g window-status-content-attr bold,blink,reverse
+#setw -g window-status-content-attr bold,blink,reverse Adapt to newer version
+setw -g window-status-activity-attr bold,reverse
 
 #Set xterm title
 set -g set-titles on

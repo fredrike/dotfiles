@@ -1,15 +1,17 @@
 " Colorshemes
 Bundle 'tir_black'
 Bundle 'inkpot'
-Bundle 'Solarized'
-Bundle 'xterm-color-table.vim'
+"Bundle 'Solarized'
+"Bundle 'xterm-color-table.vim'
 
 " Latex
 Bundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
+Bundle 'LanguageTool'
 
 " Arduino
 Bundle 'sudar/vim-arduino-syntax'
 
 " Other
 Bundle 'phpcs.vim'
-Bundle 'tpope/vim-repeat'
+"Bundle 'tpope/vim-repeat'
+

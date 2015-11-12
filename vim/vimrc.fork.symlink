@@ -1,5 +1,7 @@
 if !has('gui_running')
   set term=xterm-256color
+else
+  set guifont=Sauce\ Code\ Powerline:h11
 endif
 
 " Arduino
@@ -7,12 +9,36 @@ au BufRead,BufNewFile *.ino,*.pde set filetype=arduino
 
 " Latex & Textfiles like text wrap.
 au BufRead,BufNewFile *.tex,*.txt setlocal wrap linebreak nolist
-autocmd FileType tex call Tex_MakeMap('<leader>ll', ':update!<CR>:call Tex_RunLaTeX()!<CR>', 'n', '<buffer>')
+autocmd FileType tex call Tex_MakeMap('<silent> <leader>ll', ':silent update!<CR>:silent call Tex_CompileMultipleTimes()!<CR>', 'n', '<buffer>')
+autocmd FileType tex call Tex_MakeMap('<silent> <leader>mm', ':silent update!<CR>:silent !git latexdiff $*<CR>', 'n', '<buffer>')
 autocmd FileType tex call Tex_MakeMap('<leader>lf', ':call MakeTexFolds(1)!<CR>', 'n', '<buffer>')
-autocmd FileType tex call Tex_MakeMap('<leader>ll', '<ESC> :update!<CR>:call Tex_RunLaTeX()!<CR>', 'v', '<buffer>')
-autocmd FileType tex let g:Tex_FoldedSections='%%comment,appendix,part,chapter,section,%%fakesection,subsection,subsubsection,paragraph'
-autocmd FileType tex let let Tex_ViewRuleComplete_pdf = '/usr/bin/open -a Preview $*.pdf'
-autocmd FileType tex noremap ,lö ':call MakeTexFolds(1)<CR>'
+"autocmd FileType tex call Tex_MakeMap('<leader>ll', '<ESC> :update!<CR>:call Tex_RunLaTeX()!<CR>', 'v', '<buffer>')
+autocmd FileType tex let g:Tex_FoldedSections='%%comment,appendix,part,%%fakechapter,chapter,section,%%fakesection,subsection,subsubsection,paragraph'
+"autocmd FileType tex noremap ,lö ':call MakeTexFolds(1)<CR>'
+" TIP: if you write your \label's as \label{fig:something}, then if you
+" type in \ref{fig: and press <C-n> you will automatically cycle through
+" all the figure labels. Very useful!
+autocmd FileType tex set iskeyword+=:
+autocmd FileType tex let g:tex_flavor = 'latex'
+autocmd FileType tex let g:Tex_MultipleCompileFormat = 'pdf,aux'
+autocmd FileType tex let g:Tex_MultipleCompileFormats = 'dvi,pdf'
+autocmd FileType tex let g:Tex_TreatMacViewerAsUNIX = 0
+autocmd FileType tex let g:Tex_DefaultTargetFormat = 'pdf'
+autocmd FileType tex let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 --interaction=nonstopmode $*'
+"autocmd FileType tex let let g:Tex_CompileRule_pdf = 'arara -v $*'
+autocmd FileType tex let g:Tex_ViewRule_pdf = 'Skim'
+autocmd FileType tex let g:Tex_GotoError = 0
+autocmd FileType tex call Tex_SetTeXCompilerTarget('View','pdf')
+
+
+" Command-R will write, compile, and forward search--thanks to
+" http://reference-man.blogspot.com/2011/09/fully-integrated-latex-in-macvim.html
+" preview, switch back to main window
+"autocmd FileType tex map <silent> <D-r> :silent w<cr>:silent call Tex_CompileMultipleTimes()<cr>:silent call Tex_ForwardSearchLaTeX()<cr>
+autocmd FileType tex map <silent> <D-r> :silent w<cr>:silent call Tex_CompileMultipleTimes()<cr>:silent call Tex_ForwardSearchLaTeX()<cr>
+autocmd FileType tex imap <D-r> <ESC><D-r>
+" We are not interested in using midrules all the time
+autocmd FileType tex let g:syntastic_tex_chktex_args="-n44"
 
 syntax on
 
@@ -29,15 +55,18 @@ noremap <up> gk
 noremap <down> gj
 noremap <S-Up> k
 noremap <S-Down> j
-
+noremap <D-M-Right> gt
+noremap <D-M-Left> gT
+"set macmeta
 
 set number
 
-set background=dark
-let g:solarized_termcolors=256
-let g:solarized_termtrans=0
-let g:solarized_contrast="normal"
-let g:solarized_visibility="normal"
+"set background=dark
+"let g:solarized_termcolors=256
+"let g:solarized_termtrans=1
+"let g:solarized_contrast="normal"
+"let g:solarized_visibility="normal"
+"let g:solarized_menu      =   1
 
 " Load a colorscheme here are a few I like :)
 color solarized
@@ -45,3 +74,22 @@ color solarized
 "color molokai
 "color peaksea
 
+
+
+" Plugin key-mappings.
+"imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+"" SuperTab like snippets behavior.
+"imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+"\ "\<Plug>(neosnippet_expand_or_jump)"
+"\: pumvisible() ? "\<C-n>" : "\<TAB>"
+"smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+"\ "\<Plug>(neosnippet_expand_or_jump)"
+"\: "\<TAB>"
+
+"" For snippet_complete marker.
+"if has('conceal')
+  "set conceallevel=2 concealcursor=i
+"endif
